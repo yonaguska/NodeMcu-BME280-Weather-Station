@@ -23,7 +23,7 @@ Pressure = 992.2 hPa ( 29.30 Inch) rising 0.22 hPa
 
 Altitude = 680.9 feet
 
-Wiring of the BME to the NodeMCU is caled out in the original web page.
+Wiring of the BME to the NodeMCU is shown on the original web page.
 
 Enjoy,
 -Kirk
