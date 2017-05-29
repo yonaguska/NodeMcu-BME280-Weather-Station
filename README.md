@@ -9,19 +9,19 @@ rise of fall of the barometric pressure.
 
 The current output of the web display looks like:
 
-ESP8266 Weather Web Server
+     ESP8266 Weather Web Server
 
-2017-05-29 19:52:01
+     2017-05-29 19:52:01
 
-Temperature = 84.1 °F
+     Temperature = 84.1 °F
 
-Humidity = 35.3 %
+     Humidity = 35.3 %
 
-Approx. Dew Point = 60.8 °F
+     Approx. Dew Point = 60.8 °F
 
-Pressure = 992.2 hPa ( 29.30 Inch) rising 0.22 hPa
+     Pressure = 992.2 hPa ( 29.30 Inch) rising 0.22 hPa
 
-Altitude = 680.9 feet
+     Altitude = 680.9 feet
 
 Wiring of the BME to the NodeMCU is shown on the original web page.
 
