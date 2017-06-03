@@ -7,6 +7,14 @@ time and date, which I added to the web page it produces. I also wanted to tinke
 more functions in the BME's API, so I added an altitude line. I also wanted to see the
 rise of fall of the barometric pressure.
 
+I tried it on a Wemos D1 mini (clone) and found that it works without any modification,
+but you may find it will need different port drivers. I also learned that not all USB
+cables work for programming; I have one that works great for power but the driver did
+not see the board when I plugged it in. The wiring for the BME280 is identical.
+
+I cloned this same file on my Mac; so I have one for NodeMCU and another for Wemos.
+This gave me the opportunity to customize the name so I can tell these apart on the LAN.
+
 The current output of the web display looks like:
 
      ESP8266 Weather Web Server
