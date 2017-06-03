@@ -12,6 +12,9 @@ but you may find it will need different port drivers. I also learned that not al
 cables work for programming; I have one that works great for power but the driver did
 not see the board when I plugged it in. The wiring for the BME280 is identical.
 
+If you want to see the differences in these, I found this insightful: 
+   https://frightanic.com/iot/comparison-of-esp8266-nodemcu-development-boards/
+
 I cloned this same file on my Mac; so I have one for NodeMCU and another for Wemos.
 This gave me the opportunity to customize the name so I can tell these apart on the LAN.
 
