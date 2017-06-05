@@ -1,9 +1,12 @@
 /*********
-  Project: BME Weather Web server using NodeMCU
+  Project: BME Weather Web server using Wemos Node Mini
   Implements Adafruit's sensor libraries.
   Complete project is at: http://embedded-lab.com/blog/making-a-simple-weather-web-server-using-esp8266-and-bme280/
   
-  Modified code from Rui Santos' Temperature Weather Server posted on http://randomnerdtutorials.com  
+  Modified code from Rui Santos' Temperature Weather Server posted on http://randomnerdtutorials.com
+
+  Added altitude, nodeType and debug flag
+  
 *********/
 
 #include <Wire.h>
@@ -19,6 +22,12 @@ Adafruit_BME280 bme; // I2C
 // Replace with your network details
 const char* ssid = "Gitli";
 const char* password = "Barabajagal1950";
+
+char debug = 1; // toggles showing: board type and altitude information, or generic ESP8266 and no altitude
+float myAltitudeInMeters = 196.0; // Nevada, TX
+const char* nodeType = "Wemos D1 Mini";
+//const char* nodeType = "NodeMCU";
+
 float h, t, p, pin, dp, a, af;
 char temperatureFString[6];
 char dpString[6];
@@ -206,17 +215,21 @@ unsigned long sendNTPpacket(IPAddress& address)
 
 
 void getWeather() {
+    float sp;
     
     // get data from BME
     h = bme.readHumidity();
     t = bme.readTemperature();
     t = t*1.8+32.0;
     dp = t-0.36*(100.0-h);
-    a = bme.readAltitude(1017);
-    af = a * 3.28;
     
     p = bme.readPressure()/100.0F;
     pin = 0.02953*p;
+    sp = bme.seaLevelForAltitude(myAltitudeInMeters, p);
+    Serial.print("Sea level pressure for 196 meters "); // Nevada, TX
+    Serial.print(sp);
+    a = bme.readAltitude(sp);
+    af = a * 3.28;
     dtostrf(t, 5, 1, temperatureFString);
     dtostrf(h, 5, 1, humidityString);
     dtostrf(p, 6, 1, pressureString);
@@ -242,9 +255,13 @@ void getWeather() {
     }
     // get our average
     pressureAverage = pressureTotal/pressureSamples;
+    Serial.print("\nTotal pressure ");
     Serial.println(pressureTotal);
+    Serial.print("number of samples ");
     Serial.println(pressureSamples);
+    Serial.print("Pressure average ");
     Serial.println(pressureAverage);
+    Serial.print("Pressure reading ");
     Serial.println(p);
     
     if (p < pressureAverage) {
@@ -285,7 +302,13 @@ void loop() {
             client.println("<!DOCTYPE HTML>");
             client.println("<html>");
             client.println("<head><META HTTP-EQUIV=\"refresh\" CONTENT=\"15\"></head>");
-            client.println("<body><h1>ESP8266 Weather Web Server</h1>");
+            if (debug) {
+              client.println("<body><h1>");
+              client.println(nodeType);
+              client.println(" Weather Web Server</h1>");
+            } else {
+              client.println("<body><h1>ESP8266 Weather Web Server</h1>");
+            }
             client.println("<table border=\"2\" width=\"456\" cellpadding=\"10\"><tbody><tr><td>");
             client.println("<h3>");
             client.println(timeDateAndTimeString);
@@ -308,9 +331,11 @@ void loop() {
             client.println(pressureDifference);
             client.println(" hPa");
             client.println("</h3>");
-            client.println("<h3>Altitude = ");
-            client.println(altitudeFeetString);
-            client.println(" feet</h3>");
+            if (debug) {
+              client.println("<h3>Altitude = ");
+              client.println(altitudeFeetString);
+              client.println(" feet</h3>");
+            }
             client.println("</td></tr></tbody></table></body></html>");   
             break;
         }
