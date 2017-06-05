@@ -12,6 +12,9 @@ but you may find it will need different port drivers. I also learned that not al
 cables work for programming; I have one that works great for power but the driver did
 not see the board when I plugged it in. The wiring for the BME280 is identical.
 
+Here's a good place to find drivers (there are others, Google Arduino NodeMCU drivers):
+  http://kig.re/2014/12/31/how-to-use-arduino-nano-mini-pro-with-CH340G-on-mac-osx-yosemite.html
+
 If you want to see the differences in these, I found this insightful: 
    https://frightanic.com/iot/comparison-of-esp8266-nodemcu-development-boards/
 
